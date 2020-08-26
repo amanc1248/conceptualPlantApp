@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   //!this list is created for showing the events
   List<dynamic> _selectedEvents;
   TextEditingController _eventController;
-  // SharedPreferences prefs;
+  TextEditingController _subjectNameController;
 
   @override
   void initState() {
@@ -26,35 +24,11 @@ class _HomePageState extends State<HomePage> {
 
     //this is for getting the text Value
     _eventController = TextEditingController();
+    _subjectNameController = TextEditingController();
     //TODO 2) Initializing the events in an empty map.
     _events = {};
     _selectedEvents = [];
-    // initPrefs();
   }
-
-  // initPrefs() async {
-  //   prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     _events = Map<DateTime, List<dynamic>>.from(
-  //         decodeMap(json.decode(prefs.getString("events") ?? "{}")));
-  //   });
-  // }
-
-  // Map<String, dynamic> encodeMap(Map<DateTime, dynamic> map) {
-  //   Map<String, dynamic> newMap = {};
-  //   map.forEach((key, value) {
-  //     newMap[key.toString()] = map[key];
-  //   });
-  //   return newMap;
-  // }
-
-  // Map<DateTime, dynamic> decodeMap(Map<String, dynamic> map) {
-  //   Map<DateTime, dynamic> newMap = {};
-  //   map.forEach((key, value) {
-  //     newMap[DateTime.parse(key)] = map[key];
-  //   });
-  //   return newMap;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -114,15 +88,37 @@ class _HomePageState extends State<HomePage> {
               ),
               calendarController: _controller,
             ),
-            ..._selectedEvents.map((event) => ListTile(
-                  title: Text(event),
-                )),
+            GestureDetector(
+              onTap: () {
+                _showAddDialog();
+              },
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  height: 40,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: Color(0xFF334192),
+                      borderRadius: BorderRadius.all(Radius.circular(16))),
+                  child: Center(
+                      child: Text("Add Event",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600))),
+                ),
+              ),
+            ),
+            ..._selectedEvents.map((event) {
+              return Container(
+                color: Colors.lightBlueAccent,
+                height: 50,
+                width: double.infinity,
+                child: Text(event),
+              );
+            }),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: _showAddDialog,
       ),
     );
   }
@@ -131,23 +127,35 @@ class _HomePageState extends State<HomePage> {
     await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              content: TextField(
-                controller: _eventController,
+              content: Column(
+                children: [
+                  TextField(
+                    controller: _eventController,
+                  ),
+                  TextField(
+                    controller: _subjectNameController,
+                  ),
+                ],
               ),
               actions: <Widget>[
                 FlatButton(
                   child: Text("Save"),
                   onPressed: () {
                     //! if textfield is empty, DO NOTHING
-                    if (_eventController.text.isEmpty) return;
+                    if (_eventController.text.isEmpty ||
+                        _subjectNameController.text.isEmpty) return;
                     //! if there is already an events in the selected day. Then add the text from the textfield
                     if (_events[_controller.selectedDay] != null) {
                       _events[_controller.selectedDay]
                           .add(_eventController.text);
+                      _events[_controller.selectedDay]
+                          .add(_subjectNameController.text);
                     }
-                    //! if there is no events in the selected day, simply give the text to the events. 
+                    //! if there is no events in the selected day, simply give the text to the events.
                     else {
-                      _events[_controller.selectedDay] = [_eventController.text];
+                      _events[_controller.selectedDay] = [
+                        _eventController.text
+                      ];
                     }
                     // prefs.setString("events", json.encode(encodeMap(_events)));
                     _eventController.clear();
@@ -161,3 +169,60 @@ class _HomePageState extends State<HomePage> {
     });
   }
 }
+
+// void main() => runApp(MyApp());
+
+// class MyApp extends StatelessWidget {
+//   static const String _title = 'Flutter Code Sample';
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: _title,
+//       home: Scaffold(
+//         appBar: AppBar(title: const Text(_title)),
+//         body: Center(
+//           child: MyStatefulWidget(),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class MyStatefulWidget extends StatefulWidget {
+//   MyStatefulWidget({Key key}) : super(key: key);
+
+//   @override
+//   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+// }
+
+// class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+//   String dropdownValue = 'One';
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return DropdownButton<String>(
+//       value: dropdownValue,
+//       icon: Icon(Icons.arrow_downward),
+//       iconSize: 24,
+//       elevation: 16,
+//       style: TextStyle(color: Colors.deepPurple),
+//       underline: Container(
+//         height: 2,
+//         color: Colors.deepPurpleAccent,
+//       ),
+//       onChanged: (String newValue) {
+//         setState(() {
+//           dropdownValue = newValue;
+//         });
+//       },
+//       items: <String>['One', 'Two', 'Free', 'Four']
+//           .map<DropdownMenuItem<String>>((String value) {
+//         return DropdownMenuItem<String>(
+//           value: value,
+//           child: Text(value),
+//         );
+//       }).toList(),
+//     );
+//   }
+// }
