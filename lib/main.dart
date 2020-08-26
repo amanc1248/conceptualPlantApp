@@ -1,4 +1,5 @@
 
+import 'package:conceptualschoolapp/Screens/homePage2/homePage2.dart';
 import 'package:flutter/material.dart';
 
 import 'Screens/eventPage3/eventPage3.dart';
@@ -22,7 +23,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   final List<Widget> _children=[
     ProfilePage1(),
     EventPage3(),
-    ProfilePage1(),
+    HomePage2(),
     ProfilePage1(),
     ProfilePage1(),
   ];

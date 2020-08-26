@@ -19,10 +19,7 @@ class ParticularDateEvent extends StatelessWidget {
               children: [
                 Text(
                   "Mathematic ||",
-                  style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.black),
+                  style: kSubjectStyle,
                 ),
                 Text(
                   "Standard Level",
