@@ -35,7 +35,7 @@ class _EventPage3State extends State<EventPage3> {
               ),
               Expanded(
                 child: Container(
-                  child: OurConceptualCalendar(),
+                  child: HomePage(),
                 ),
               ),
               // Expanded(
