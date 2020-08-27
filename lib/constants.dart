@@ -9,3 +9,4 @@ const kEventPageEventstle =
     TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.grey);
 const kSubjectStyle =
     TextStyle(fontSize: 17, fontWeight: FontWeight.w900, color: Colors.black);
+const kContentPaddingEventPage =  EdgeInsets.fromLTRB(20, 20, 20, 12);

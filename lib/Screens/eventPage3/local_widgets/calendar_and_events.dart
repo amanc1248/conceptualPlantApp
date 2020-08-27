@@ -1,5 +1,9 @@
+import 'package:conceptualschoolapp/Screens/Model/event_modifier.dart';
+import 'package:conceptualschoolapp/Screens/eventPage3/local_widgets/Particular_Date_Event.dart';
+import 'package:conceptualschoolapp/Screens/eventPage3/local_widgets/eventclass.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,36 +14,32 @@ class _HomePageState extends State<HomePage> {
   //
   CalendarController _controller;
 
-  //TODO 1) in the calender events are map of key dateTime and events are in the list.
-  Map<DateTime, List<dynamic>> _events;
   //!this list is created for showing the events
-  List<dynamic> _selectedEvents;
-  TextEditingController _eventController;
+  List<EventStore> _selectedEvents;
+  TextEditingController _lectureLevelController;
   TextEditingController _subjectNameController;
 
   @override
   void initState() {
     super.initState();
     _controller = CalendarController();
-
-    //this is for getting the text Value
-    _eventController = TextEditingController();
+    _lectureLevelController = TextEditingController();
     _subjectNameController = TextEditingController();
-    //TODO 2) Initializing the events in an empty map.
-    _events = {};
     _selectedEvents = [];
   }
 
+  EventModifier eventModifierProvider;
   @override
   Widget build(BuildContext context) {
+    eventModifierProvider = Provider.of<EventModifier>(context, listen: false);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TableCalendar(
-              //TODO 3) Assigning _events to the calendar parameter events
-              events: _events,
+              events: eventModifierProvider.events,
               initialCalendarFormat: CalendarFormat.week,
               calendarStyle: CalendarStyle(
                   canEventMarkersOverflow: true,
@@ -60,10 +60,11 @@ class _HomePageState extends State<HomePage> {
               ),
               startingDayOfWeek: StartingDayOfWeek.monday,
               onDaySelected: (date, events) {
-                setState(() {
-                  _selectedEvents = events;
-                });
-              },
+              //  eventModifierProvider.events;
+                  setState(() {
+                    _selectedEvents = events.cast<EventStore>();
+                  });
+             },
               builders: CalendarBuilders(
                 selectedDayBuilder: (context, date, events) => Container(
                     margin: const EdgeInsets.all(4.0),
@@ -109,12 +110,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            ..._selectedEvents.map((event) {
-              return Container(
-                color: Colors.lightBlueAccent,
-                height: 50,
-                width: double.infinity,
-                child: Text(event),
+            ..._selectedEvents.map((EventStore) {
+              return ParticularDateEvent(
+                lectureSubject: EventStore.subject.toString(),
+                lectureStandard: EventStore.level.toString(),
               );
             }),
           ],
@@ -130,10 +129,10 @@ class _HomePageState extends State<HomePage> {
               content: Column(
                 children: [
                   TextField(
-                    controller: _eventController,
+                    controller: _subjectNameController,
                   ),
                   TextField(
-                    controller: _subjectNameController,
+                    controller: _lectureLevelController,
                   ),
                 ],
               ),
@@ -141,32 +140,39 @@ class _HomePageState extends State<HomePage> {
                 FlatButton(
                   child: Text("Save"),
                   onPressed: () {
-                    //! if textfield is empty, DO NOTHING
-                    if (_eventController.text.isEmpty ||
+                    var theControllerMethod = _controller.selectedDay;
+                    if (_lectureLevelController.text.isEmpty ||
                         _subjectNameController.text.isEmpty) return;
                     //! if there is already an events in the selected day. Then add the text from the textfield
-                    if (_events[_controller.selectedDay] != null) {
-                      _events[_controller.selectedDay]
-                          .add(_eventController.text);
-                      _events[_controller.selectedDay]
-                          .add(_subjectNameController.text);
+                    if (eventModifierProvider.events[_controller.selectedDay] !=
+                        null) {
+                      eventModifierProvider.addingEventsToList(
+                          lectureLevel: _lectureLevelController,
+                          subjectName: _subjectNameController,
+                          controller: theControllerMethod);
                     }
                     //! if there is no events in the selected day, simply give the text to the events.
                     else {
-                      _events[_controller.selectedDay] = [
-                        _eventController.text
-                      ];
+                      eventModifierProvider.showingTheEvent(
+                          lectureLevel: _lectureLevelController,
+                          subjectName: _subjectNameController,
+                          controller: theControllerMethod);
                     }
-                    // prefs.setString("events", json.encode(encodeMap(_events)));
-                    _eventController.clear();
+                  //  eventModifierProvider.settingTheValue(
+                  //    controller: theControllerMethod,
+                  //    selectedEvents: _selectedEvents
+                  //  );
+                    setState(() {
+                      _selectedEvents =
+                          eventModifierProvider.events[_controller.selectedDay];
+                    });
+                    _subjectNameController.clear();
+                    _lectureLevelController.clear();
                     Navigator.pop(context);
                   },
                 )
               ],
             ));
-    setState(() {
-      _selectedEvents = _events[_controller.selectedDay];
-    });
   }
 }
 

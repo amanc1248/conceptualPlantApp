@@ -1,17 +1,18 @@
+import 'package:conceptualschoolapp/constants.dart';
 import 'package:flutter/material.dart';
 
 class HomePage2Heading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 12, 8, 0),
+    return Padding(
+      padding: kContentPaddingEventPage,
+      child: Container(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.only(top:15),
-              child: CircleAvatar(radius: 30, backgroundColor: Colors.white),
+              child: CircleAvatar(radius: 30, backgroundColor: Colors.white70),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20,top: 15),
@@ -20,6 +21,9 @@ class HomePage2Heading extends StatelessWidget {
                 children: [
                   Text("Hi John",
                       style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800)),
+                  SizedBox(
+                    height: 8,
+                  ),
                   Text(
                     "Here is your schedule\n for a week",
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
@@ -28,7 +32,7 @@ class HomePage2Heading extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left:40),
+              padding: const EdgeInsets.only(left:20),
               child: Text(
                   "Mon 12 Jan",
                   style: TextStyle(

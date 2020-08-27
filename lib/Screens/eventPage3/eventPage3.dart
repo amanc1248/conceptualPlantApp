@@ -23,6 +23,7 @@ class _EventPage3State extends State<EventPage3> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Container(
           child: Column(
             children: [
@@ -38,36 +39,6 @@ class _EventPage3State extends State<EventPage3> {
                   child: HomePage(),
                 ),
               ),
-              // Expanded(
-              //   child: SingleChildScrollView(
-              //     scrollDirection: Axis.vertical,
-              //     child: Column(
-              //       children: [
-              //         Padding(
-              //           padding: const EdgeInsets.fromLTRB(0, 0, 25, 0),
-              //           child: TimeAndDuration(
-              //             time: "09:30",
-              //             amPm: "AM",
-              //             duration: "1h 30min",
-              //           ),
-              //         ),
-              //         ParticularDateEvent(),
-              //         TimeAndDuration(
-              //           time: "09:30",
-              //           amPm: "AM",
-              //           duration: "1h 30min",
-              //         ),
-              //         ParticularDateEvent(),
-              //         TimeAndDuration(
-              //           time: "09:30",
-              //           amPm: "AM",
-              //           duration: "1h 30min",
-              //         ),
-              //         ParticularDateEvent(),
-              //       ],
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
