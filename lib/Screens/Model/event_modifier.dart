@@ -3,7 +3,16 @@ import 'package:flutter/cupertino.dart';
 
 class EventModifier extends ChangeNotifier {
   Map<DateTime, List<EventStore>> _events ={};
+  List<EventStore> _selectedEvents =[];
+
+  List<EventStore> get selectedEvents  =>_selectedEvents;
+
   Map<DateTime, List<EventStore>> get events => _events;
+
+set selectedEvents(List<EventStore> val) {
+    _selectedEvents = val;
+    notifyListeners();
+  }
 
   set events(Map<DateTime, List<EventStore>> val) {
     _events = val;
@@ -26,8 +35,8 @@ class EventModifier extends ChangeNotifier {
   //   selectedEvents =events[controller];
   //   notifyListeners();
   // }
-  // whenSelectedDay({selectedEvents}){
-  //   selectedEvents = events.cast<EventStore>();
-  //   notifyListeners();
-  // }
+  whenSelectedDay(_date,_event){
+    selectedEvents = _event.cast<EventStore>();
+    notifyListeners();
+  }
 }

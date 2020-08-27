@@ -15,7 +15,6 @@ class _HomePageState extends State<HomePage> {
   CalendarController _controller;
 
   //!this list is created for showing the events
-  List<EventStore> _selectedEvents;
   TextEditingController _lectureLevelController;
   TextEditingController _subjectNameController;
 
@@ -25,7 +24,6 @@ class _HomePageState extends State<HomePage> {
     _controller = CalendarController();
     _lectureLevelController = TextEditingController();
     _subjectNameController = TextEditingController();
-    _selectedEvents = [];
   }
 
   EventModifier eventModifierProvider;
@@ -59,12 +57,7 @@ class _HomePageState extends State<HomePage> {
                 formatButtonShowsNext: false,
               ),
               startingDayOfWeek: StartingDayOfWeek.monday,
-              onDaySelected: (date, events) {
-              //  eventModifierProvider.events;
-                  setState(() {
-                    _selectedEvents = events.cast<EventStore>();
-                  });
-             },
+              onDaySelected: eventModifierProvider.whenSelectedDay,
               builders: CalendarBuilders(
                 selectedDayBuilder: (context, date, events) => Container(
                     margin: const EdgeInsets.all(4.0),
@@ -110,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            ..._selectedEvents.map((EventStore) {
+            ...eventModifierProvider.selectedEvents.map((EventStore) {
               return ParticularDateEvent(
                 lectureSubject: EventStore.subject.toString(),
                 lectureStandard: EventStore.level.toString(),
@@ -163,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                   //    selectedEvents: _selectedEvents
                   //  );
                     setState(() {
-                      _selectedEvents =
+                      eventModifierProvider.selectedEvents =
                           eventModifierProvider.events[_controller.selectedDay];
                     });
                     _subjectNameController.clear();
