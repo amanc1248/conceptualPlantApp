@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
+        child: Column( 
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TableCalendar(
@@ -57,7 +57,13 @@ class _HomePageState extends State<HomePage> {
                 formatButtonShowsNext: false,
               ),
               startingDayOfWeek: StartingDayOfWeek.monday,
-              onDaySelected: eventModifierProvider.whenSelectedDay,
+              onDaySelected: (day, events){
+                setState(() {
+                  eventModifierProvider.whenSelectedDay(
+                event: events
+              );
+                });
+              },
               builders: CalendarBuilders(
                 selectedDayBuilder: (context, date, events) => Container(
                     margin: const EdgeInsets.all(4.0),
@@ -151,14 +157,11 @@ class _HomePageState extends State<HomePage> {
                           subjectName: _subjectNameController,
                           controller: theControllerMethod);
                     }
-                  //  eventModifierProvider.settingTheValue(
-                  //    controller: theControllerMethod,
-                  //    selectedEvents: _selectedEvents
-                  //  );
-                    setState(() {
-                      eventModifierProvider.selectedEvents =
-                          eventModifierProvider.events[_controller.selectedDay];
-                    });
+                    print(eventModifierProvider.events.length);
+                    // setState(() {
+                    //   eventModifierProvider.selectedEvents =
+                    //       eventModifierProvider.events[_controller.selectedDay];
+                    // });
                     _subjectNameController.clear();
                     _lectureLevelController.clear();
                     Navigator.pop(context);
@@ -166,6 +169,10 @@ class _HomePageState extends State<HomePage> {
                 )
               ],
             ));
+    setState(() {
+      eventModifierProvider.settingTheValue(controller: _controller.selectedDay);
+    });
+    print(eventModifierProvider.selectedEvents.length);
   }
 }
 

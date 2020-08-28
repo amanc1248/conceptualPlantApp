@@ -2,8 +2,12 @@ import 'package:conceptualschoolapp/constants.dart';
 import 'package:flutter/material.dart';
 
 class HomePage2Heading extends StatelessWidget {
+  
   @override
+  
   Widget build(BuildContext context) {
+    DateTime now = new DateTime.now();
+DateTime date = new DateTime(now.year, now.month, now.day);
     return Padding(
       padding: kContentPaddingEventPage,
       child: Container(
@@ -15,7 +19,7 @@ class HomePage2Heading extends StatelessWidget {
               child: CircleAvatar(radius: 30, backgroundColor: Colors.white70),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20,top: 15),
+              padding: const EdgeInsets.only(left: 0,top: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -32,11 +36,11 @@ class HomePage2Heading extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left:20),
+              padding: const EdgeInsets.only(left:0),
               child: Text(
-                  "Mon 12 Jan",
+                  date.toString(),
                   style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 10,
                       fontWeight: FontWeight.w800,
                       color: Color(0xFF334192)),
                 ),

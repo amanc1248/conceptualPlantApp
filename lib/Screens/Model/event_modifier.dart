@@ -20,9 +20,9 @@ set selectedEvents(List<EventStore> val) {
   }
 
   addingEventsToList({lectureLevel, subjectName, controller}) {
-    notifyListeners();
-    return events[controller]
+     events[controller]
         .add(EventStore(subject: subjectName.text, level: lectureLevel.text));
+    notifyListeners();
   }
 
   showingTheEvent({lectureLevel, subjectName, controller}) {
@@ -31,12 +31,12 @@ set selectedEvents(List<EventStore> val) {
     ];
     notifyListeners();
   }
-  // settingTheValue({selectedEvents,controller}){
-  //   selectedEvents =events[controller];
-  //   notifyListeners();
-  // }
-  whenSelectedDay(_date,_event){
-    selectedEvents = _event.cast<EventStore>();
+  settingTheValue({controller}){
+    selectedEvents =events[controller];
+    notifyListeners();
+  }
+  whenSelectedDay({event}){
+    selectedEvents = event.cast<EventStore>();
     notifyListeners();
   }
 }
