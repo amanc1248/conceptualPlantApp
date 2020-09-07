@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DeliveriesList extends StatefulWidget {
+  final String subjectName;
+  final String roomNo;
+  final int theDaysLeft;
+  DeliveriesList({this.roomNo,this.subjectName,this.theDaysLeft});
   @override
   _DeliveriesListState createState() => _DeliveriesListState();
 }
@@ -24,9 +28,7 @@ class _DeliveriesListState extends State<DeliveriesList> {
           offset: Offset(0,4)
         ),
       ],
-      // border: BoxBorder(
-        
-      // )
+
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 12, 12, 15),
@@ -39,15 +41,15 @@ class _DeliveriesListState extends State<DeliveriesList> {
                 children: [
                   CircleAvatar(
                     radius:5,
-                    backgroundColor: Colors.red,
+                    backgroundColor: (widget.theDaysLeft<4?Colors.red:Colors.orangeAccent),
                   ),
                   SizedBox(width: 5,),
-                  Text("Today",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                  Text(widget.theDaysLeft.toString()+" days left",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                 ],
               ),
               SizedBox(height: 23),
-              Text("World War ||",style:TextStyle(fontSize:19,fontWeight: FontWeight.bold),),
-              Text("1500 word essay",style:TextStyle(fontSize:19,fontWeight: FontWeight.bold))
+              Text(widget.subjectName,style:TextStyle(fontSize:19,fontWeight: FontWeight.bold),),
+              Text(widget.roomNo,style:TextStyle(fontSize:19,fontWeight: FontWeight.bold))
             ],
           ),
         ),

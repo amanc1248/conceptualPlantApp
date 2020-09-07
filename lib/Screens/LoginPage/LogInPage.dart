@@ -29,14 +29,12 @@ class _LogInPageState extends State<LogInPage> {
   final myEmailController = TextEditingController();
   final myPasswordController = TextEditingController();
 
-  @override
   void disposeEmail() {
     // Clean up the controller when the widget is disposed.
     myEmailController.dispose();
     super.dispose();
   }
 
-  @override
   void disposePassword() {
     // Clean up the controller when the widget is disposed.
     myPasswordController.dispose();

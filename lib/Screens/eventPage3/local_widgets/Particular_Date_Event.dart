@@ -6,14 +6,12 @@ import 'package:provider/provider.dart';
 class ParticularDateEvent extends StatelessWidget {
   final String lectureSubject;
   final String lectureStandard;
-  ParticularDateEvent({this.lectureStandard, this.lectureSubject});
+  final String lectureRoom;
+  ParticularDateEvent({this.lectureStandard, this.lectureSubject,this.lectureRoom});
   @override
   Widget build(BuildContext context) {
-    final eventModifierProvider =
-        Provider.of<EventModifier>(context, listen: false);
-
     return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 12, 25, 12),
+      padding: const EdgeInsets.fromLTRB(25, 0, 25, 12),
       child: Consumer<EventModifier>(
         builder: (context, value, child) => Container(
             height: 165,
@@ -54,7 +52,7 @@ class ParticularDateEvent extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                         child: Text(
-                          "Room 120, Block C",
+                          lectureRoom,
                           style: kEventPageEventstle,
                         ),
                       ),

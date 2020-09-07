@@ -1,5 +1,7 @@
 import 'package:conceptualschoolapp/Screens/Model/event_modifier.dart';
+import 'package:conceptualschoolapp/Screens/allEventPage4/allEventsPage4.dart';
 import 'package:conceptualschoolapp/Screens/homePage2/homePage2.dart';
+import 'package:conceptualschoolapp/Screens/overviewPage5/overviewPage5.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Screens/eventPage3/eventPage3.dart';
@@ -25,8 +27,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     ProfilePage1(),
     EventPage3(),
     HomePage2(),
-    ProfilePage1(),
-    ProfilePage1(),
+    AllEventPage(),
+    OverviewPage()
   ];
 
   @override
@@ -41,6 +43,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         home: Scaffold(
           body: Center(child: _children.elementAt(_selectedIndex)),
           bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Color(0xFF334192),
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("")),
               BottomNavigationBarItem(
@@ -53,7 +56,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   ),
                   title: Text("")),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.message), title: Text("")),
+                  icon: Icon(Icons.bookmark), title: Text("")),
               BottomNavigationBarItem(
                   icon: Icon(Icons.table_chart), title: Text("")),
             ],

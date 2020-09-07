@@ -2,6 +2,9 @@ import 'package:conceptualschoolapp/constants.dart';
 import 'package:flutter/material.dart';
 
 class TodaysEventLists extends StatefulWidget {
+  final String subjectName;
+  final String roomName;
+  TodaysEventLists({this.roomName,this.subjectName});
   @override
   _TodaysEventListsState createState() => _TodaysEventListsState();
 }
@@ -11,7 +14,7 @@ class _TodaysEventListsState extends State<TodaysEventLists> {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.fromLTRB(8, 10, 8, 12),
-        height: 110,
+        height: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(15)),
           color:Colors.white,
@@ -51,13 +54,13 @@ class _TodaysEventListsState extends State<TodaysEventLists> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Mathematic ||",
+                  widget.subjectName,
                   style: kSubjectStyle,
                 ),
                 Row(
                   children: [
                     Icon(Icons.location_on,color:Colors.grey),
-                    Text("Room 120, Block c",style: kEventPageEventstle,)
+                    Text(widget.roomName,style: kEventPageEventstle,)
                   ],
                 ),
                 Row(
